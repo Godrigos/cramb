@@ -1,7 +1,7 @@
 # cramb
 CIPRES API - MrBayes Submission Client
 
-__The project is still under development an is not
+__The project is still under development and is not
 functional yet.__
 
 cramb is a [Python 3](https://www.python.org/)
