@@ -19,16 +19,15 @@ along with CRAMrBayesT.  If not, see <https://www.gnu.org/licenses/>.
 Copyright 2018 Rodrigo Aluizio    
 """
 
-import sys
+from tkinter import *
 from time import sleep
 from os import makedirs, remove
 from os.path import exists, join
 from requests.exceptions import ConnectionError
-# from print_progress import print_progress
 from download_folder_path import get_download_path as dl_dir
 
 
-def get_results(job):
+def get_results(self, job):
     """
     While loop that evaluates Job status and download the result
     when the job is complete.
@@ -41,7 +40,9 @@ def get_results(job):
                 job.update()
                 print(job.messages[-1])
             except ConnectionError:
-                print("Connection lost! Will keep trying!")
+                self.text_box(state=NORMAL)
+                self.text_box.insert(END, "Connection lost! Will keep trying!\n\n", "error")
+                self.text_box(state=DISABLED)
                 pass
         else:
             # Create a directory to store the results
@@ -49,22 +50,21 @@ def get_results(job):
         
             if not exists(dld):
                 makedirs(dld)
-            print("\nDownloading results of", str(job.metadata['clientJobName']))
+
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "Downloading results of " + str(job.metadata['clientJobName']) + '.', "cool")
+            self.text_box.config(state=DISABLED)
         
-            resultFiles = job.listResults(final=True)
-            i = 0
-        
+            result_files = job.listResults(final=True)
+
             try:
-                for filename in resultFiles:
-                    resultFiles[filename].download(directory=dld)
-                    # print_progress(i, len(resultFiles)-1, bar_length=60)
-                    i += 1
+                for filename in result_files:
+                    result_files[filename].download(directory=dld)
             except ConnectionError:
                 print("Connection lost!")
                 print("Press Enter to exit ...")
                 input()
-                sys.exit(1)
-        
+
             job.delete()
             print("\nJob completed and files downloaded!")
             print("Press Enter to exit ...")
@@ -75,4 +75,3 @@ def get_results(job):
               "retrieve the results manually.\nUse your '.pkl' file.")
         print("Press Enter to exit ...")
         input()
-        sys.exit(1)

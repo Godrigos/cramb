@@ -204,7 +204,7 @@ class Application:
 
     def valid_radio(self):
         """
-        Verify the Checkbutton variable values and handles server_url entry state accordingly.
+        Verify the Checkbutton variable values and handles validation status accordingly.
         """
         if self.valid_val.get() == 0:
             self.validate = False
@@ -223,11 +223,12 @@ class Application:
                                                validateOnly=self.validate)
                     if not job.jobHandle and job.commandline:
                         self.text_box.config(state=NORMAL)
-                        self.text_box.insert(END, "Submission validated!\n\n", "cool")
+                        self.text_box.insert(END, "Login information and file validated!\n"
+                                                  "You may now submit the analysis.\n\n", "cool")
                         self.text_box.config(state=DISABLED)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
-                    self.text_box.insert(END, "Submission failed! Check you login  information and files\n\n", "error")
+                    self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
                     self.text_box.config(state=DISABLED)
             else:
                 job = self.login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
@@ -237,7 +238,7 @@ class Application:
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job.show(messages=True) + "\n\n", "cool")
                 self.text_box.config(state=DISABLED)
-                get_results(job)
+                get_results(self, job)
         except ConnectionError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "No Internet connection!\nVerify your connection and try again!\n\n", "error")
