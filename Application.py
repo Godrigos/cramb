@@ -26,14 +26,20 @@ from tkinter.font import nametofont
 from pathlib import Path
 from Bio import AlignIO
 from Bio.Nexus.Nexus import NexusError
-from os.path import join
+from os.path import splitext, basename, join
 import python_cipres.client as cra
+from requests.exceptions import ConnectionError
+from download_folder_path import get_download_path as dl_dir
+from dill import dump
+from get_results import get_results
 
 
 class Application:
     def __init__(self, master=None):
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
+        self.validate = True
+        self.valid_val = IntVar(value=1)
         self.conf = self.getconfig()
         self.file_path = StringVar(value="File path")
 
@@ -89,6 +95,10 @@ class Application:
                                      command=self.url_radio)
         self.url_state.place(relx=0.73, rely=0.165)
 
+        self.valid = Checkbutton(master, text='Validate only', variable=self.valid_val,
+                                 command=self.valid_radio)
+        self.valid.place(relx=0.29, rely=0.93)
+
         self.text_box = Text(master, state=DISABLED, font=('Consolas', 8))
         self.text_box.place(relx=0.005, rely=0.3, width=575, height=220)
 
@@ -100,8 +110,8 @@ class Application:
         self.progress = Progressbar(master, orient="horizontal", length=100, mode="determinate")
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
 
-        self.send_button = Button(master, text="Submit")
-        self.send_button.place(relx=0.2, rely=0.92, height=25)
+        self.send_button = Button(master, text="Submit", command=self.mb_submit)
+        self.send_button.place(relx=0.15, rely=0.92, height=25)
 
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.7, rely=0.92, height=25)
@@ -110,15 +120,16 @@ class Application:
                                 username=self.user.get(), password=self.passwd.get(),
                                 baseUrl=self.server_url.get())
 
+        self.text_box.tag_add("cool", '0.0', '1.0')
+        self.text_box.tag_config("cool", foreground="black")
+        self.text_box.tag_add("error", '0.0', '1.0')
+        self.text_box.tag_config("error", foreground="red")
+
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
                                            filetypes=[('Nexus files', '*.bay *.nex *.nexus'),
                                                       ('Text files', '*.txt'), ('All files', '*.*')],
                                            title="Select a file to submit to CIPRES server"))
-        self.text_box.tag_add("cool", '0.0', '1.0')
-        self.text_box.tag_config("cool", foreground="black")
-        self.text_box.tag_add("error", '0.0', '1.0')
-        self.text_box.tag_config("error", foreground="red")
         try:
             self.choose_file.config(textvariable=self.file_path)
             align = AlignIO.read(self.file_path.get(), format="nexus")
@@ -190,3 +201,52 @@ class Application:
             self.server_url.configure(state=DISABLED)
         else:
             self.server_url.configure(state=NORMAL)
+
+    def valid_radio(self):
+        """
+        Verify the Checkbutton variable values and handles server_url entry state accordingly.
+        """
+        if self.valid_val.get() == 0:
+            self.validate = False
+        else:
+            self.validate = True
+
+    def mb_submit(self):
+        vpar = {"toolId": "MRBAYES_XSEDE", "runtime_": 168, "mrbayesblockquery_": 1}
+        file_name = self.choose_file.get()
+        ipar = {"infile_": file_name}
+        try:
+            meta = {"statusEmail": "true", "clientJobName": splitext(basename(file_name))[0]}
+            if self.validate:
+                try:
+                    job = self.login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
+                                               validateOnly=self.validate)
+                    if not job.jobHandle and job.commandline:
+                        self.text_box.config(state=NORMAL)
+                        self.text_box.insert(END, "Submission validated!\n\n", "cool")
+                        self.text_box.config(state=DISABLED)
+                except cra.ValidationError:
+                    self.text_box.config(state=NORMAL)
+                    self.text_box.insert(END, "Submission failed! Check you login  information and files\n\n", "error")
+                    self.text_box.config(state=DISABLED)
+            else:
+                job = self.login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
+                with open(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')),
+                          'wb') as f:
+                    dump(job, f)
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, job.show(messages=True) + "\n\n", "cool")
+                self.text_box.config(state=DISABLED)
+                get_results(job)
+        except ConnectionError:
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "No Internet connection!\nVerify your connection and try again!\n\n", "error")
+            self.text_box.config(state=DISABLED)
+        except cra.CipresError:
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "CIPRES services are currently unavailable, try again later!\n\n", "error")
+            self.text_box.config(state=DISABLED)
+        except FileNotFoundError:
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "File not found!\n\n", "error")
+            self.text_box.config(state=DISABLED)
