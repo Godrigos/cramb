@@ -1,7 +1,7 @@
-# CRAMrBayesT
+# cramb
 CIPRES API - MrBayes Submission Client
 
-CRAMrBayesT is a [Python 3](https://www.python.org/)
+cramb is a [Python 3](https://www.python.org/)
 application with a GUI built using Tkinter.
 It is intended to ease the process of sending a Nexus
 file to CIPRES servers for a bayesian phylogenetic

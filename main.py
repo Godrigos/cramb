@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 """
-This file is part of CRAMrBayesT.
+This file is part of cramb.
 
-CRAMrBayesT is free software: you can redistribute it and/or modify
+cramb is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-CRAMrBayesT is distributed in the hope that it will be useful,
+cramb is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
@@ -117,9 +117,9 @@ class Application:
                                            filetypes=[('Nexus files', '*.bay *.nex *.nexus'),
                                                       ('Text files', '*.txt'), ('All files', '*.*')],
                                            title="Select a file to submit to CIPRES server"))
-        self.text_box.tag_add("cool", '0.0')
+        self.text_box.tag_add("cool", '0.0', '1.0')
         self.text_box.tag_config("cool", foreground="black")
-        self.text_box.tag_add("error", '0.0')
+        self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
         try:
             self.choose_file.config(textvariable=self.file_path)
