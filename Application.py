@@ -244,7 +244,8 @@ class Application:
             self.text_box.config(state=DISABLED)
         except cra.CipresError:
             self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "CIPRES services are currently unavailable, try again later!\n\n", "error")
+            self.text_box.insert(END, "CIPRES services are currently unavailable or you login information"
+                                      " is incorrect!\n\n", "error")
             self.text_box.config(state=DISABLED)
         except FileNotFoundError:
             self.text_box.config(state=NORMAL)
