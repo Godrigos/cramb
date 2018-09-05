@@ -27,7 +27,6 @@ from tkinter.font import nametofont
 from pathlib import Path
 from Bio import AlignIO
 from Bio.Nexus.Nexus import NexusError
-from re import sub
 from os.path import join
 import python_cipres.client as cra
 
@@ -137,21 +136,16 @@ class Application:
                     line = line.rstrip('\n')
                     line = line.strip(' ')
                     line = line.rstrip(';')
-                    if line == 'begin mrbayes' or 'begin MrBayes' or 'begin MRBAYES':
+                    if line.lower() == 'begin mrbayes':
                         found = True
                     if found:
                         mb_block.append(line)
             try:
                 outgroup = False
                 for item in mb_block:
-                    if 'outgroup' in item:
+                    if 'outgroup' in item.lower():
                         self.text_box.config(state=NORMAL)
-                        self.text_box.insert(END, "Outgroup: " + sub("outgroup ", '', item) + "\n\n", "cool")
-                        self.text_box.config(state=DISABLED)
-                        outgroup = True
-                    elif 'Outgroup' in item:
-                        self.text_box.config(state=NORMAL)
-                        self.text_box.insert(END, "Outgroup: " + sub("Outgroup ", '', item) + "\n\n", "cool")
+                        self.text_box.insert(END, item + "\n\n", "cool")
                         self.text_box.config(state=DISABLED)
                         outgroup = True
                 if not outgroup:
@@ -167,7 +161,6 @@ class Application:
             pass
         except NexusError:
             self.text_box.config(state=NORMAL)
-
             self.text_box.insert(END, "Nexus file is corrupted!\n", "error")
             self.text_box.insert(END, "Please, fix the file and try again!\n\n", "error")
             self.text_box.config(state=DISABLED)
