@@ -4,13 +4,13 @@ CIPRES API - MrBayes Submission Client
 __The project is still under development and is not
 functional yet.__
 
-cramb is a [Python 3](https://www.python.org/)
+cramb is a <a href="https://www.python.org" target="_blank">Python 3</a>
 application with a GUI built using Tkinter.
 It is intended to ease the process of sending a Nexus
 file to CIPRES servers for a bayesian phylogenetic
 inference (using MrBayes) and then retrieve the results.
 It assumes your Nexus file has a MrBayes
-[Block](https://en.wikipedia.org/wiki/Nexus_file)
+<a href="https://en.wikipedia.org/wiki/Nexus_file" target="_blank">Block</a>
 correctly configured along with the data to be analysed.
 
 Here is an example of a MrBayes Block inside a Nexus
@@ -30,3 +30,4 @@ begin mrbayes;
     sumt relburnin=yes burninfrac=0.25 contype=halfcompat conformat=simple;
 END;
  ```
+ 
