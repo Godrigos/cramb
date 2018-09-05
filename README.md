@@ -1,8 +1,8 @@
 # cramb
 CIPRES API - MrBayes Submission Client
 
-The project is still under development an is not
-functional yet.
+__The project is still under development an is not
+functional yet.__
 
 cramb is a [Python 3](https://www.python.org/)
 application with a GUI built using Tkinter.
