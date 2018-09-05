@@ -176,6 +176,7 @@ class Application:
             with open(join(self.home_dir, 'pycipres.conf'), 'r') as f:
                 for line in f:
                     line = line.rstrip('\n')
+                    line = line.strip(' ')
                     (key, val) = line.split('=')
                     conf[key] = val
         except FileNotFoundError:
@@ -199,5 +200,5 @@ root.title("CRAMrBayesT - CIPRES API MrBayes Client")
 style = ThemedStyle(root)
 style.set_theme("plastik")
 Application(root)
-# root.iconbitmap('MrBayes.ico')    # Windows only
+# root.iconbitmap('cramb.ico')    # Windows only
 root.mainloop()
