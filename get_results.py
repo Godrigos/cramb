@@ -68,11 +68,11 @@ def get_results(self, job):
 
                 try:
                     self.progress.config(value=0, maximum=len(result_files)-1)
-                    self.i = 0
+                    self.j = 0
                     for filename in result_files:
                         result_files[filename].download(directory=dld)
-                        self.i += 1
-                        self.progress(variable=self.i)
+                        self.j += 1
+                        self.progress(variable=self.j)
                 except ConnectionError:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
