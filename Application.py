@@ -40,7 +40,7 @@ class Application:
     def __init__(self, master=None):
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
-        self.validate = True
+        self.validate = False
         self.valid_val = IntVar(value=0)
         self.conf = self.getconfig()
         self.file_path = StringVar(value="File path")

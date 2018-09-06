@@ -11,14 +11,14 @@ def job_show(self, job, messages=True):
         self.text_box.insert(END, "Submission validated.  Commandline is: '%s'" % job.commandline + '\n', "cool")
         self.text_box.config(state=DISABLED)
 
-    string = "Job=%s" % job.jobHandle
+    string = "Job=" + job.jobHandle
     if job.terminalStage:
         if job.failed:
-            string += ", failed at stage %s" % job.jobStage + '\n'
+            string += ", failed at stage " + job.jobStage + '\n'
         else:
-            string += ", finished, results are at %s" % job.resultsUrl + '\n'
+            string += ", finished, results are at " + job.resultsUrl + '\n'
     else:
-        string += ", not finished, stage=%s" % job.jobStage + '\n'
+        string += ", not finished, stage=" + job.jobStage + '\n'
     self.text_box.config(state=NORMAL)
     self.text_box.insert(END, string, "cool")
     self.text_box.config(state=DISABLED)
