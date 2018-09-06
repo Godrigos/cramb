@@ -288,3 +288,7 @@ class Application:
                         get_results(self, job)
         except IndexError:
             pass
+        except ConnectionError:
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "No Internet connection. Try again later!\n", "error")
+            self.text_box.config(state=DISABLED)

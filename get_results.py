@@ -27,6 +27,7 @@ from os.path import exists, join
 from requests.exceptions import ConnectionError
 from download_folder_path import get_download_path as dl_dir
 from tkinter import messagebox
+import python_cipres.client as cra
 
 
 def get_results(self, job):
@@ -36,7 +37,7 @@ def get_results(self, job):
     """
     self.mb_font = Style()
     self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
-    while True:
+    while not cra.CipresError:
         try:
             job.update()
             while not job.isDone():
