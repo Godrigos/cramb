@@ -20,6 +20,7 @@ Copyright 2018 Rodrigo Aluizio
 """
 
 from tkinter import *
+from tkinter.ttk import *
 from time import sleep
 from os import makedirs, remove
 from os.path import exists, join
@@ -33,6 +34,8 @@ def get_results(self, job):
     While loop that evaluates Job status and download the result
     when the job is complete.
     """
+    self.mb_font = Style()
+    self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
     while True:
         try:
             job.update()
