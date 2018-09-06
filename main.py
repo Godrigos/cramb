@@ -22,6 +22,7 @@ Copyright 2018 Rodrigo Aluizio
 from tkinter import *
 from ttkthemes import ThemedStyle
 from Application import Application
+from old_job_check import old_job_check
 
 root = Tk()
 root.geometry('600x400')
@@ -31,4 +32,6 @@ style = ThemedStyle(root)
 style.set_theme("plastik")
 Application(root)
 # root.iconbitmap('cramb.ico')    # Windows only
+root.wait_visibility()
+old_job_check(Application)
 root.mainloop()

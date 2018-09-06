@@ -40,7 +40,7 @@ class Application:
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
         self.validate = True
-        self.valid_val = IntVar(value=1)
+        self.valid_val = IntVar(value=0)
         self.conf = self.getconfig()
         self.file_path = StringVar(value="File path")
 
@@ -48,6 +48,8 @@ class Application:
         self.default_font.configure(family="Helvetica", size=10)
         self.cb_font = Style()
         self.cb_font.configure('TCheckbutton', font=('Helvetica', 8))
+        self.mb_font = Style()
+        self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
 
         self.file_label = Label(master, text="File:", font=('Helvetica', 10, 'bold'))
         self.file_label.place(relx=0.04, rely=0.015, height=25)
