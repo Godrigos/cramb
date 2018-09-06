@@ -79,13 +79,13 @@ def get_results(self, job):
                 self.text_box.config(state=DISABLED)
                 remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
         except SystemExit:
-            confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?")
+            confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?", justify=CENTER)
             if confirm:
                 messagebox.showwarning("Job result pending!", "You current job results will not be downloaded "
                                                               "automatically you will have to retrieve the results "
                                                               "later! Restart this application and confirm the "
                                                               "download of results from previous submissions!",
-                                       icon='warning')
+                                       icon='warning', justify=CENTER)
                 quit()
             else:
                 continue

@@ -35,5 +35,5 @@ def job_show(self, job, messages=True):
             self.text_box.config(state=DISABLED)
         else:
             self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "There is no metadata.", "cool")
+            self.text_box.insert(END, "There is no metadata.\n", "cool")
             self.text_box.config(state=DISABLED)
