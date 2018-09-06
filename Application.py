@@ -111,7 +111,7 @@ class Application:
 
         self.text_box.config(yscrollcommand=self.scrollb.set)
 
-        self.progress = Progressbar(master, orient="horizontal", length=100, mode="determinate")
+        self.progress = Progressbar(master, orient="horizontal", mode="indeterminate")
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
 
         self.send_button = Button(master, text="Submit", command=self.mb_submit)
