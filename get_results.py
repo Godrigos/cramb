@@ -48,7 +48,7 @@ def get_results(self, job):
                     self.text_box.config(state=DISABLED)
                 except ConnectionError:
                     self.text_box(state=NORMAL)
-                    self.text_box.insert(END, "Connection lost! Will keep trying!\n\n", "error")
+                    self.text_box.insert(END, "Connection lost! Will keep trying!\n", "error")
                     self.text_box(state=DISABLED)
                     pass
             else:

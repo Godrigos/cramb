@@ -101,7 +101,7 @@ class Application:
 
         self.valid = Checkbutton(master, text='Validate only', variable=self.valid_val,
                                  command=self.valid_radio)
-        self.valid.place(relx=0.22, rely=0.93)
+        self.valid.place(relx=0.23, rely=0.93)
 
         self.text_box = Text(master, state=DISABLED, font=('Consolas', 8))
         self.text_box.place(relx=0.005, rely=0.3, width=575, height=220)
@@ -115,7 +115,7 @@ class Application:
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
 
         self.send_button = Button(master, text="Submit", command=self.mb_submit)
-        self.send_button.place(relx=0.08, rely=0.92, height=25)
+        self.send_button.place(relx=0.079, rely=0.92, height=25)
 
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.78, rely=0.92, height=25)
