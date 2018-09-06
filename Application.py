@@ -32,6 +32,7 @@ from requests.exceptions import ConnectionError
 from download_folder_path import get_download_path as dl_dir
 from dill import dump
 from get_results import get_results
+from job_show import job_show
 
 
 class Application:
@@ -220,11 +221,7 @@ class Application:
                 try:
                     job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
                                           validateOnly=self.validate)
-                    if not job.jobHandle and job.commandline:
-                        self.text_box.config(state=NORMAL)
-                        self.text_box.insert(END, "Login information and file validated!\n"
-                                                  "You may now submit the analysis.\n\n", "cool")
-                        self.text_box.config(state=DISABLED)
+                    job_show(self, job, messages=True)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
@@ -235,7 +232,7 @@ class Application:
                           'wb') as f:
                     dump(job, f)
                 self.text_box.config(state=NORMAL)
-                self.text_box.insert(END, job.show(messages=True) + "\n\n", "cool")
+                self.text_box.insert(END, job_show(self, job, messages=True) + "\n\n", "cool")
                 self.text_box.config(state=DISABLED)
                 get_results(self, job)
         except ConnectionError:
