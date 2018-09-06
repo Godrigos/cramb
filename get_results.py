@@ -42,7 +42,7 @@ def get_results(self, job):
                     job.update()
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, job.messages[-1] + '\n', "cool")
-                    self.text_box.config(State=DISABLED)
+                    self.text_box.config(state=DISABLED)
                 except ConnectionError:
                     self.text_box(state=NORMAL)
                     self.text_box.insert(END, "Connection lost! Will keep trying!\n\n", "error")
@@ -84,7 +84,8 @@ def get_results(self, job):
                 messagebox.showwarning("Job result pending!", "You current job results will not be downloaded "
                                                               "automatically you will have to retrieve the results "
                                                               "later! Restart this application and confirm the "
-                                                              "download of results from previous submissions!")
+                                                              "download of results from previous submissions!",
+                                       icon='warning')
                 quit()
             else:
                 continue

@@ -30,9 +30,10 @@ from os.path import splitext, basename, join
 import python_cipres.client as cra
 from requests.exceptions import ConnectionError
 from download_folder_path import get_download_path as dl_dir
-from dill import dump
+from dill import dump, load
 from get_results import get_results
 from job_show import job_show
+from glob import glob
 
 
 class Application:
@@ -100,7 +101,7 @@ class Application:
 
         self.valid = Checkbutton(master, text='Validate only', variable=self.valid_val,
                                  command=self.valid_radio)
-        self.valid.place(relx=0.29, rely=0.93)
+        self.valid.place(relx=0.22, rely=0.93)
 
         self.text_box = Text(master, state=DISABLED, font=('Consolas', 8))
         self.text_box.place(relx=0.005, rely=0.3, width=575, height=220)
@@ -114,15 +115,20 @@ class Application:
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
 
         self.send_button = Button(master, text="Submit", command=self.mb_submit)
-        self.send_button.place(relx=0.15, rely=0.92, height=25)
+        self.send_button.place(relx=0.08, rely=0.92, height=25)
 
         self.close_button = Button(master, text="Close", command=quit)
-        self.close_button.place(relx=0.7, rely=0.92, height=25)
+        self.close_button.place(relx=0.78, rely=0.92, height=25)
+
+        self.results_button = Button(master, text="Recover", command=self.old_job_check)
+        self.results_button.place(relx=0.45, rely=0.92, height=25)
 
         self.text_box.tag_add("cool", '0.0', '1.0')
         self.text_box.tag_config("cool", foreground="black")
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
+
+        self.recover()
 
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
@@ -192,6 +198,15 @@ class Application:
             pass
         return conf
 
+    def recover(self):
+        files = []
+        for file in glob(join(dl_dir(), '*.pkl')):
+            files.append(file)
+        if files:
+            self.results_button.configure(state=NORMAL)
+        else:
+            self.results_button.configure(state=DISABLED)
+
     def url_radio(self):
         """
         Verify the Checkbutton variable values and handles server_url entry state accordingly.
@@ -250,3 +265,24 @@ class Application:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "File not found!\n\n", "error")
             self.text_box.config(state=DISABLED)
+
+    def old_job_check(self):
+        try:
+            files = []
+            for file in glob(join(dl_dir(), '*.pkl')):
+                files.append(file)
+            if not files:
+                pass
+            else:
+                for file in files:
+                    with open(join(dl_dir(), file), 'rb') as f:
+                        job = load(f)
+                    if not job.isDone():
+                        self.text_box.config(state=NORMAL)
+                        self.text_box.insert(END, "Job " + job.metadata['clientJobName'] +
+                                             " not finished yet!\nTry again later!\n", "cool")
+                        self.text_box.config(state=DISABLED)
+                    else:
+                        get_results(self, job)
+        except IndexError:
+            pass

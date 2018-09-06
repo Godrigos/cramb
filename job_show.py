@@ -25,13 +25,13 @@ def job_show(self, job, messages=True):
     if messages:
         for m in job.messages:
             self.text_box.config(state=NORMAL)
-            self.text_box.insert("\t%s" % m, "cool")
+            self.text_box.insert("\t" + m, "cool")
             self.text_box.config(state=DISABLED)
         if job.metadata:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "Metadata:", "cool")
             for key in job.metadata:
-                self.text_box.insert(END, "\t%s=%s" % (key, job.metadata[key]), "cool")
+                self.text_box.insert(END, "\t" + job.metadata, "cool")
             self.text_box.config(state=DISABLED)
         else:
             self.text_box.config(state=NORMAL)
