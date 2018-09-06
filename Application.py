@@ -249,7 +249,7 @@ class Application:
                           'wb') as f:
                     dump(job, f)
                 self.text_box.config(state=NORMAL)
-                self.text_box.insert(END, job.messages[-1] + "\n\n", "cool")
+                self.text_box.insert(END, job_show(self, job) + "\n\n", "cool")
                 self.text_box.config(state=DISABLED)
                 get_results(self, job)
         except ConnectionError:

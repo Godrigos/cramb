@@ -96,4 +96,4 @@ def get_results(self, job):
             else:
                 continue
         except cra.CipresError:
-            pass
+            break
