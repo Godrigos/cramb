@@ -116,10 +116,6 @@ class Application:
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.7, rely=0.92, height=25)
 
-        self.login = cra.Client(appname=self.appname.get(), appID=self.appid.get(),
-                                username=self.user.get(), password=self.passwd.get(),
-                                baseUrl=self.server_url.get())
-
         self.text_box.tag_add("cool", '0.0', '1.0')
         self.text_box.tag_config("cool", foreground="black")
         self.text_box.tag_add("error", '0.0', '1.0')
@@ -212,6 +208,9 @@ class Application:
             self.validate = True
 
     def mb_submit(self):
+        login = cra.Client(appname=self.appname.get(), appID=self.appid.get(),
+                           username=self.user.get(), password=self.passwd.get(),
+                           baseUrl=self.server_url.get())
         vpar = {"toolId": "MRBAYES_XSEDE", "runtime_": 168, "mrbayesblockquery_": 1}
         file_name = self.choose_file.get()
         ipar = {"infile_": file_name}
@@ -219,8 +218,8 @@ class Application:
             meta = {"statusEmail": "true", "clientJobName": splitext(basename(file_name))[0]}
             if self.validate:
                 try:
-                    job = self.login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
-                                               validateOnly=self.validate)
+                    job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
+                                          validateOnly=self.validate)
                     if not job.jobHandle and job.commandline:
                         self.text_box.config(state=NORMAL)
                         self.text_box.insert(END, "Login information and file validated!\n"
@@ -231,7 +230,7 @@ class Application:
                     self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
                     self.text_box.config(state=DISABLED)
             else:
-                job = self.login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
+                job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
                 with open(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')),
                           'wb') as f:
                     dump(job, f)
