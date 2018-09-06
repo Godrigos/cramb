@@ -25,6 +25,7 @@ from os import makedirs, remove
 from os.path import exists, join
 from requests.exceptions import ConnectionError
 from download_folder_path import get_download_path as dl_dir
+from tkinter import messagebox
 
 
 def get_results(self, job):
@@ -32,46 +33,58 @@ def get_results(self, job):
     While loop that evaluates Job status and download the result
     when the job is complete.
     """
-    try:
-        job.update()
-        while not job.isDone():
-            sleep(600)
-            try:
-                job.update()
-                print(job.messages[-1])
-            except ConnectionError:
-                self.text_box(state=NORMAL)
-                self.text_box.insert(END, "Connection lost! Will keep trying!\n\n", "error")
-                self.text_box(state=DISABLED)
-                pass
-        else:
-            # Create a directory to store the results
-            dld = join(dl_dir(), str(job.metadata['clientJobName']))
-        
-            if not exists(dld):
-                makedirs(dld)
+    while True:
+        try:
+            job.update()
+            while not job.isDone():
+                sleep(600)
+                try:
+                    job.update()
+                    self.text_box.config(state=NORMAL)
+                    self.text_box.insert(END, job.messages[-1] + '\n', "cool")
+                    self.text_box.config(State=DISABLED)
+                except ConnectionError:
+                    self.text_box(state=NORMAL)
+                    self.text_box.insert(END, "Connection lost! Will keep trying!\n\n", "error")
+                    self.text_box(state=DISABLED)
+                    pass
+            else:
+                # Create a directory to store the results
+                dld = join(dl_dir(), str(job.metadata['clientJobName']))
 
-            self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "Downloading results of " + str(job.metadata['clientJobName']) + '.', "cool")
-            self.text_box.config(state=DISABLED)
-        
-            result_files = job.listResults(final=True)
+                if not exists(dld):
+                    makedirs(dld)
 
-            try:
-                for filename in result_files:
-                    result_files[filename].download(directory=dld)
-            except ConnectionError:
-                print("Connection lost!")
-                print("Press Enter to exit ...")
-                input()
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, "Downloading results of " + str(job.metadata['clientJobName']) + '.\n',
+                                     "cool")
+                self.text_box.config(state=DISABLED)
 
-            job.delete()
-            print("\nJob completed and files downloaded!")
-            print("Press Enter to exit ...")
-            remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
-            input()
-    except KeyboardInterrupt:
-        print("\nYou have canceled the result watching. You will have to " +
-              "retrieve the results manually.\nUse your '.pkl' file.")
-        print("Press Enter to exit ...")
-        input()
+                result_files = job.listResults(final=True)
+
+                try:
+                    self.progress.config(maximum=len(result_files)-1)
+                    for filename in result_files:
+                        result_files[filename].download(directory=dld)
+                        self.progress.step(1)
+                except ConnectionError:
+                    self.text_box.config(state=NORMAL)
+                    self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
+                                              "previous results", "error")
+                    self.text_box.config(state=DISABLED)
+
+                job.delete()
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, "Job completed and files downloaded!\n", "cool")
+                self.text_box.config(state=DISABLED)
+                remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
+        except SystemExit:
+            confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?")
+            if confirm:
+                messagebox.showwarning("Job result pending!", "You current job results will not be downloaded "
+                                                              "automatically you will have to retrieve the results "
+                                                              "later! Restart this application and confirm the "
+                                                              "download of results from previous submissions!")
+                quit()
+            else:
+                continue

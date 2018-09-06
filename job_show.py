@@ -8,7 +8,7 @@ def job_show(self, job, messages=True):
 
     if not job.jobHandle and job.commandline:
         self.text_box.config(state=NORMAL)
-        self.text_box.insert(END, "Submission validated.  Commandline is: '%s'" % job.commandline + '\n\n', "cool")
+        self.text_box.insert(END, "Submission validated.  Commandline is: '%s'" % job.commandline + '\n', "cool")
         self.text_box.config(state=DISABLED)
 
     string = "Job=%s" % job.jobHandle
@@ -19,7 +19,9 @@ def job_show(self, job, messages=True):
             string += ", finished, results are at %s" % job.resultsUrl + '\n'
     else:
         string += ", not finished, stage=%s" % job.jobStage + '\n'
-    print(string)
+    self.text_box.config(state=NORMAL)
+    self.text_box.insert(END, string, "cool")
+    self.text_box.config(state=DISABLED)
     if messages:
         for m in job.messages:
             self.text_box.config(state=NORMAL)
@@ -33,5 +35,5 @@ def job_show(self, job, messages=True):
             self.text_box.config(state=DISABLED)
         else:
             self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "There is no metadata", "cool")
-            self.text_box.config(DISABLED)
+            self.text_box.insert(END, "There is no metadata.", "cool")
+            self.text_box.config(state=DISABLED)

@@ -27,7 +27,7 @@ from dill import load
 from tkinter.messagebox import askyesno
 
 
-def old_job_check():
+def old_job_check(self):
     try:
         files = []
         for file in glob(join(dl_dir(), '*.pkl')):
@@ -41,7 +41,7 @@ def old_job_check():
                 for file in files:
                     with open(join(dl_dir(), file), 'rb') as f:
                         job = load(f)
-                    get_results(job)
+                    get_results(self, job)
             else:
                 pass
     except IndexError:
