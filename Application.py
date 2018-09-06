@@ -280,6 +280,7 @@ class Application:
                     job.update()
                     if not job.isDone():
                         self.text_box.config(state=NORMAL)
+                        self.text_box.insert(END, job.messages[-1] + "\n", "cool")
                         self.text_box.insert(END, "Job " + job.metadata['clientJobName'] +
                                              " not finished yet!\nTry again later!\n", "cool")
                         self.text_box.config(state=DISABLED)
