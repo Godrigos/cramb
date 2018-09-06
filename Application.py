@@ -277,6 +277,7 @@ class Application:
                 for file in files:
                     with open(join(dl_dir(), file), 'rb') as f:
                         job = load(f)
+                    job.update()
                     if not job.isDone():
                         self.text_box.config(state=NORMAL)
                         self.text_box.insert(END, "Job " + job.metadata['clientJobName'] +
