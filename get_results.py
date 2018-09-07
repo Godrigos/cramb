@@ -21,7 +21,6 @@ Copyright 2018 Rodrigo Aluizio
 
 from tkinter import *
 from tkinter.ttk import *
-from time import sleep
 from os import makedirs, remove
 from os.path import exists, join
 from requests.exceptions import ConnectionError
@@ -39,9 +38,8 @@ def get_results(self, job):
     self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
     while True:
         try:
-            job.update()
+            job.update().wait(600)
             while not job.isDone():
-                sleep(600)
                 try:
                     job.update()
                     self.text_box.config(state=NORMAL)
