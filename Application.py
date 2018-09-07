@@ -122,7 +122,7 @@ class Application:
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.78, rely=0.92, height=25)
 
-        self.results_button = Button(master, text="Download", state=DISABLED)
+        self.results_button = Button(master, text="Download", state=DISABLED, command=self.recover)
         self.results_button.place(relx=0.45, rely=0.92, height=25)
 
         self.text_box.tag_add("cool", '0.0', '1.0')
