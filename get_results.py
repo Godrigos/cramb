@@ -71,7 +71,7 @@ def get_results(self, job):
                     for filename in result_files:
                         result_files[filename].download(directory=dld)
                         j += 1
-                        self.progress.config(value=j)
+                        self.progress.config(value=j, maximum=len(result_files)-1)
                         self.progress.update()
                 except ConnectionError:
                     self.text_box.config(state=NORMAL)
