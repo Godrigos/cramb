@@ -27,7 +27,7 @@ from Application import Application
 root = Tk()
 root.geometry('600x400')
 root.resizable(width=False, height=False)
-root.title("CRAMrBayesT - CIPRES API MrBayes Client")
+root.title("cramb - CIPRES API MrBayes Client")
 style = ThemedStyle(root)
 style.set_theme("vista")
 Application(root)
