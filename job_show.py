@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 
 
-def job_show(self, job, messages=True):
+def job_show(job, messages=True):
     msg = ""
+    string = ""
     """ A debugging method to dump some of the content of this object to text_box entry """
     if not job.jobHandle and job.commandline:
         string = str("Submission validated.  Commandline is: " + job.commandline + '\n')
-        return string
-
-    string = str("Job=" + job.jobHandle)
-
-    if job.terminalStage:
+    elif job.jobHandle and job.commandline:
+        string = str("Job=" + job.jobHandle)
+    elif job.terminalStage:
         if job.failed:
             string += str(", failed at stage " + job.jobStage + '\n')
         else:

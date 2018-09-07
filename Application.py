@@ -238,7 +238,9 @@ class Application:
                 try:
                     job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
                                           validateOnly=self.validate)
-                    job_show(self, job, messages=True)
+                    self.text_box.config(state=NORMAL)
+                    self.text_box.insert(END, job_show(job, messages=True), "cool")
+                    self.text_box.config(state=DISABLED)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
@@ -249,7 +251,7 @@ class Application:
                           'wb') as f:
                     dump(job, f)
                 self.text_box.config(state=NORMAL)
-                self.text_box.insert(job_show(self, job), "cool")
+                self.text_box.insert(END, job_show(job), "cool")
                 self.text_box.config(state=DISABLED)
                 get_results(self, job)
         except ConnectionError:
