@@ -3,7 +3,6 @@
 
 def job_show(job, messages=True):
     msg = ""
-    string = ""
     """ A debugging method to dump some of the content of this object to text_box entry """
     if not job.jobHandle and job.commandline:
         string = str("Submission validated.  Commandline is: " + job.commandline + '\n')
@@ -11,10 +10,13 @@ def job_show(job, messages=True):
         string = str("Job=" + job.jobHandle)
     elif job.terminalStage:
         if job.failed:
+            string = str("Job=" + job.jobHandle)
             string += str(", failed at stage " + job.jobStage + '\n')
         else:
+            string = str("Job=" + job.jobHandle)
             string += str(", finished, results are at " + job.resultsUrl + '\n')
     else:
+        string = str("Job=" + job.jobHandle)
         string += str(", not finished, stage=" + job.jobStage + '\n')
 
     if messages:
