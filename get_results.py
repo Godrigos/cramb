@@ -34,6 +34,7 @@ def get_results(self, job):
     While loop that evaluates Job status and download the result
     when the job is complete.
     """
+    self.send_button.config(state=DISABLED)
     self.mb_font = Style()
     self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
     while True:
@@ -76,12 +77,14 @@ def get_results(self, job):
                     self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
                                               "previous results", "error")
                     self.text_box.config(state=DISABLED)
+                    self.send_button.config(state=NORMAL)
 
                 job.delete()
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, "Job completed and files downloaded!\n", "cool")
                 self.text_box.config(state=DISABLED)
                 remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
+                self.send_button.config(state=NORMAL)
         except SystemExit:
             confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?", justify=CENTER)
             if confirm:
@@ -90,8 +93,10 @@ def get_results(self, job):
                                                               "later! Restart this application and confirm the "
                                                               "download of results from previous submissions!",
                                        icon='warning', justify=CENTER)
+                self.send_button.config(state=NORMAL)
                 quit()
             else:
                 continue
         except cra.CipresError:
+            self.send_button.config(state=NORMAL)
             break
