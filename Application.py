@@ -37,7 +37,8 @@ from glob import glob
 
 
 class Application:
-    def __init__(self, master=None):
+    def __init__(self, master):
+        self.master = master
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
         self.validate = False
@@ -121,7 +122,7 @@ class Application:
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.78, rely=0.92, height=25)
 
-        self.results_button = Button(master, text="Recover", command=self.old_job_check)
+        self.results_button = Button(master, text="Download")
         self.results_button.place(relx=0.45, rely=0.92, height=25)
 
         self.text_box.tag_add("cool", '0.0', '1.0')
@@ -129,8 +130,7 @@ class Application:
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
 
-        self.results_button.after(600, lambda: self.state_job)
-        self.recover()
+        self.results_button.after(600, lambda: self.recover)
 
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
@@ -201,13 +201,23 @@ class Application:
         return conf
 
     def recover(self):
-        files = []
-        for file in glob(join(dl_dir(), '*.pkl')):
-            files.append(file)
-        if files:
-            self.results_button.configure(state=NORMAL)
-        else:
-            self.results_button.configure(state=DISABLED)
+        try:
+            files = []
+            for file in glob(join(dl_dir(), '*.pkl')):
+                files.append(file)
+            if not files:
+                pass
+            else:
+                for file in files:
+                    with open(join(dl_dir(), file), 'rb') as f:
+                        job = load(f)
+                    job.update()
+                    self.state = job.isDone()
+                    if self.state:
+                        get_results(self, job)
+        except IndexError:
+            pass
+        self.master.after(600, self.recover)
 
     def url_radio(self):
         """
@@ -238,6 +248,7 @@ class Application:
             meta = {"statusEmail": "true", "clientJobName": splitext(basename(file_name))[0]}
             if self.validate:
                 try:
+                    self.send_button.config(state=DISABLED)
                     job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
                                           validateOnly=self.validate)
                     self.text_box.config(state=NORMAL)
@@ -297,21 +308,3 @@ class Application:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "No Internet connection. Try again later!\n", "error")
             self.text_box.config(state=DISABLED)
-
-    def state_job(self):
-        try:
-            files = []
-            for file in glob(join(dl_dir(), '*.pkl')):
-                files.append(file)
-            if not files:
-                pass
-            else:
-                for file in files:
-                    with open(join(dl_dir(), file), 'rb') as f:
-                        job = load(f)
-                    job.update()
-                    self.state = job.isDone()
-                    if self.state:
-                        get_results(self, job)
-        except IndexError:
-            pass
