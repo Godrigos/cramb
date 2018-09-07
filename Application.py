@@ -120,7 +120,7 @@ class Application:
         self.send_button = Button(master, text="Submit", command=self.mb_submit)
         self.send_button.place(relx=0.079, rely=0.92, height=25)
 
-        self.close_button = Button(master, text="Close", command=quit)
+        self.close_button = Button(master, text="Close", command=exit)
         self.close_button.place(relx=0.78, rely=0.92, height=25)
 
         self.results_button = Button(master, text="Download", state=DISABLED, command=self.recover)
