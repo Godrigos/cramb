@@ -248,7 +248,6 @@ class Application:
             meta = {"statusEmail": "true", "clientJobName": splitext(basename(file_name))[0]}
             if self.validate:
                 try:
-                    self.send_button.config(state=DISABLED)
                     job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
                                           validateOnly=self.validate)
                     self.text_box.config(state=NORMAL)
@@ -259,6 +258,7 @@ class Application:
                     self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
                     self.text_box.config(state=DISABLED)
             else:
+                self.send_button.config(state=DISABLED)
                 job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
                 with open(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')),
                           'wb') as f:
