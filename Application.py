@@ -122,15 +122,13 @@ class Application:
         self.close_button = Button(master, text="Close", command=quit)
         self.close_button.place(relx=0.78, rely=0.92, height=25)
 
-        self.results_button = Button(master, text="Download")
+        self.results_button = Button(master, text="Download", state=DISABLED)
         self.results_button.place(relx=0.45, rely=0.92, height=25)
 
         self.text_box.tag_add("cool", '0.0', '1.0')
         self.text_box.tag_config("cool", foreground="black")
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
-
-        self.results_button.after(600, lambda: self.recover)
 
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
@@ -208,6 +206,7 @@ class Application:
             if not files:
                 pass
             else:
+                self.results_button.config(state=NORMAL)
                 for file in files:
                     with open(join(dl_dir(), file), 'rb') as f:
                         job = load(f)
@@ -215,9 +214,9 @@ class Application:
                     self.state = job.isDone()
                     if self.state:
                         get_results(self, job)
+                self.master.after(600, self.recover)
         except IndexError:
             pass
-        self.master.after(600, self.recover)
 
     def url_radio(self):
         """
