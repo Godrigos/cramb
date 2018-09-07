@@ -34,6 +34,7 @@ from dill import dump, load
 from get_results import get_results
 from job_show import job_show
 from glob import glob
+from datetime import datetime
 
 
 class Application:
@@ -211,7 +212,8 @@ class Application:
                         job = load(f)
                     job.update()
                     self.text_box.config(state=NORMAL)
-                    self.text_box.insert(END, "Watching for results...\nRefreshes every 5 minutes!", "cool")
+                    self.text_box.insert(END, "Watching for results... (\n" +
+                                         datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ')', "cool")
                     self.text_box.config(state=DISABLED)
                     self.state = job.isDone()
                     if self.state:
