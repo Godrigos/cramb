@@ -216,9 +216,9 @@ class Application:
                     self.state = job.isDone()
                     if self.state:
                         get_results(self, job)
-                self.master.after(300, self.recover)
         except IndexError:
             pass
+        self.master.after(300000, self.recover)
 
     def download_state(self):
         try:
