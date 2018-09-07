@@ -22,12 +22,8 @@ Copyright 2018 Rodrigo Aluizio
 from tkinter import *
 from ttkthemes import ThemedStyle
 from Application import Application
-import sys
-import os
 
 
-sys.stdout = open(os.devnull, 'w')
-sys.stderr = open(os.devnull, 'w')
 root = Tk()
 root.geometry('600x400')
 root.resizable(width=False, height=False)
