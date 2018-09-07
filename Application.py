@@ -130,7 +130,7 @@ class Application:
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
 
-        self.recover()
+        self.download_state()
 
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
@@ -202,9 +202,7 @@ class Application:
 
     def recover(self):
         try:
-            files = []
-            for file in glob(join(dl_dir(), '*.pkl')):
-                files.append(file)
+            files = self.download_state()
             if not files:
                 pass
             else:
@@ -215,7 +213,7 @@ class Application:
                     self.state = job.isDone()
                     if self.state:
                         get_results(self, job)
-                self.master.after(600, self.recover)
+                self.master.after(300, self.recover)
         except IndexError:
             pass
 
@@ -228,6 +226,7 @@ class Application:
                 pass
             else:
                 self.results_button.config(state=NORMAL)
+                return files
         except IndexError:
             pass
 
