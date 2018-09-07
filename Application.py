@@ -294,15 +294,18 @@ class Application:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "No Internet connection!\nVerify your connection and try again!\n\n", "error")
             self.text_box.config(state=DISABLED)
+            self.send_button.config(state=NORMAL)
         except cra.CipresError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "CIPRES services are currently unavailable or you login information"
                                       " is incorrect!\n\n", "error")
             self.text_box.config(state=DISABLED)
+            self.send_button.config(state=NORMAL)
         except FileNotFoundError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "File not found!\n\n", "error")
             self.text_box.config(state=DISABLED)
+            self.send_button.config(state=NORMAL)
 
     def old_job_check(self):
         try:
