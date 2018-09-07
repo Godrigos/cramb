@@ -248,7 +248,9 @@ class Application:
                 with open(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')),
                           'wb') as f:
                     dump(job, f)
-                job_show(self, job)
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(job_show(self, job), "cool")
+                self.text_box.config(state=DISABLED)
                 get_results(self, job)
         except ConnectionError:
             self.text_box.config(state=NORMAL)
