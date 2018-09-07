@@ -130,6 +130,8 @@ class Application:
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
 
+        self.recover()
+
     def getfile(self):
         self.file_path.set(askopenfilename(initialdir=self.home_dir,
                                            filetypes=[('Nexus files', '*.bay *.nex *.nexus'),
@@ -206,7 +208,6 @@ class Application:
             if not files:
                 pass
             else:
-                self.results_button.config(state=NORMAL)
                 for file in files:
                     with open(join(dl_dir(), file), 'rb') as f:
                         job = load(f)
@@ -215,6 +216,18 @@ class Application:
                     if self.state:
                         get_results(self, job)
                 self.master.after(600, self.recover)
+        except IndexError:
+            pass
+
+    def download_state(self):
+        try:
+            files = []
+            for file in glob(join(dl_dir(), '*.pkl')):
+                files.append(file)
+            if not files:
+                pass
+            else:
+                self.results_button.config(state=NORMAL)
         except IndexError:
             pass
 
