@@ -210,6 +210,9 @@ class Application:
                     with open(join(dl_dir(), file), 'rb') as f:
                         job = load(f)
                     job.update()
+                    self.text_box.config(state=NORMAL)
+                    self.text_box.insert(END, job_show(job), "cool")
+                    self.text_box.config(state=DISABLED)
                     self.state = job.isDone()
                     if self.state:
                         get_results(self, job)

@@ -76,9 +76,10 @@ def get_results(self, job):
                 except ConnectionError:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
-                                              "previous results", "error")
+                                              "previous results\n", "error")
                     self.text_box.config(state=DISABLED)
                     self.send_button.config(state=NORMAL)
+                    break
 
                 job.delete()
                 self.text_box.config(state=NORMAL)
