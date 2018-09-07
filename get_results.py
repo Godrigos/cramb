@@ -39,7 +39,7 @@ def get_results(self, job):
     self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
     while True:
         try:
-            job.update().wait(600)
+            job.update()
             while not job.isDone():
                 try:
                     job.update()
@@ -62,6 +62,7 @@ def get_results(self, job):
                 self.text_box.insert(END, "Downloading results of " + str(job.metadata['clientJobName']) + '.\n',
                                      "cool")
                 self.text_box.config(state=DISABLED)
+                self.text_box.update()
 
                 result_files = job.listResults(final=True)
 
