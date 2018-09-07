@@ -83,7 +83,7 @@ def get_results(self, job):
 
                 job.delete()
                 self.text_box.config(state=NORMAL)
-                self.text_box.insert(END, "Job completed and files downloaded!\n", "cool")
+                self.text_box.insert(END, "Job completed and files downloaded!\n", "done")
                 self.text_box.config(state=DISABLED)
                 remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
                 self.send_button.config(state=NORMAL)

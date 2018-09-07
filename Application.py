@@ -130,6 +130,8 @@ class Application:
         self.text_box.tag_config("cool", foreground="black")
         self.text_box.tag_add("error", '0.0', '1.0')
         self.text_box.tag_config("error", foreground="red")
+        self.text_box.tag_add("done", '0.0', '1.0')
+        self.text_box.tag_config("done", foreground="blue")
 
         self.download_state()
 
