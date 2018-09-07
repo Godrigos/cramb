@@ -212,8 +212,8 @@ class Application:
                         job = load(f)
                     job.update()
                     self.text_box.config(state=NORMAL)
-                    self.text_box.insert(END, "Watching for results... (\n" +
-                                         datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ')', "cool")
+                    self.text_box.insert(END, "Watching for results... (" +
+                                         datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ')\n', "cool")
                     self.text_box.config(state=DISABLED)
                     self.state = job.isDone()
                     if self.state:
