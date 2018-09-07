@@ -279,10 +279,12 @@ class Application:
                     dump(job, f)
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job_show(job), "cool")
-                self.text_box.insert(END, "You may now close this applicationa and wait for CIPRES e-mail"
-                                          " warning the job completion, and retrieve the results.")
+                self.text_box.insert(END, "You may now close this application and wait for CIPRES e-mail"
+                                          " warning you about job completion.\nOr keep it open and so it will"
+                                          " watch out for the results when ready!\n")
                 self.text_box.config(state=DISABLED)
                 self.text_box.update()
+                self.recover()
 
         except ConnectionError:
             self.text_box.config(state=NORMAL)
