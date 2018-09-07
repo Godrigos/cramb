@@ -284,7 +284,7 @@ class Application:
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job_show(job), "cool")
                 self.text_box.insert(END, "You may now close this application and wait for CIPRES e-mail"
-                                          " warning you about job completion.\nOr keep it open and so it will"
+                                          " warning you about job completion.\nOr keep it open so it will"
                                           " watch out for the results when ready!\n")
                 self.text_box.config(state=DISABLED)
                 self.text_box.update()
