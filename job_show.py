@@ -27,4 +27,4 @@ def job_show(job, messages=True):
         else:
             msg = "There is no metadata.\n"
 
-    return string, msg
+    return string + msg

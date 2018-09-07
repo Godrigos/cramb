@@ -239,7 +239,7 @@ class Application:
                     job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta,
                                           validateOnly=self.validate)
                     self.text_box.config(state=NORMAL)
-                    self.text_box.insert(END, job_show(job, messages=True), "cool")
+                    self.text_box.insert(END, str(job_show(job)), "cool")
                     self.text_box.config(state=DISABLED)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
@@ -253,6 +253,7 @@ class Application:
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job_show(job), "cool")
                 self.text_box.config(state=DISABLED)
+                self.text_box.update()
                 get_results(self, job)
         except ConnectionError:
             self.text_box.config(state=NORMAL)
