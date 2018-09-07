@@ -263,8 +263,6 @@ class Application:
                                           validateOnly=self.validate)
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, str(job_show(job)), "cool")
-                    self.text_box.insert(END, "You may now close this applicationa and wait for CIPRES e-mail"
-                                              " warning the job completion, and retrieve the results.")
                     self.text_box.config(state=DISABLED)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
@@ -278,6 +276,8 @@ class Application:
                     dump(job, f)
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job_show(job), "cool")
+                self.text_box.insert(END, "You may now close this applicationa and wait for CIPRES e-mail"
+                                          " warning the job completion, and retrieve the results.")
                 self.text_box.config(state=DISABLED)
                 self.text_box.update()
 
