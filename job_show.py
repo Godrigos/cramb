@@ -8,7 +8,7 @@ def job_show(self, job, messages=True):
 
     if not job.jobHandle and job.commandline:
         self.text_box.config(state=NORMAL)
-        self.text_box.insert(END, "Submission validated.  Commandline is: '%s'" % job.commandline + '\n', "cool")
+        self.text_box.insert(END, "Submission validated.  Commandline is: " + job.commandline + '\n', "cool")
         self.text_box.config(state=DISABLED)
 
     string = str("Job=" + job.jobHandle)

@@ -28,7 +28,7 @@ root.geometry('600x400')
 root.resizable(width=False, height=False)
 root.title("CRAMrBayesT - CIPRES API MrBayes Client")
 style = ThemedStyle(root)
-style.set_theme("plastik")
+style.set_theme("vista")
 Application(root)
-# root.iconbitmap('cramb.ico')    # Windows only
+root.iconbitmap('cramb.ico')    # Windows only
 root.mainloop()
