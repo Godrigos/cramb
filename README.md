@@ -28,4 +28,6 @@ begin mrbayes;
     sumt relburnin=yes burninfrac=0.25 contype=halfcompat conformat=simple;
 END;
  ```
- 
+
+More information on the application usage, can be found
+[here](https://github.com/Godrigos/cramb/wiki). 
