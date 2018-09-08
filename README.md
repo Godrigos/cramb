@@ -4,7 +4,8 @@ CIPRES API - MrBayes Submission Client
 cramb is a [Python 3](https://www.python.org)
 application with a GUI built using Tkinter.
 It is intended to ease the process of sending a Nexus
-file to CIPRES servers for a bayesian phylogenetic
+file to [CIPRES](https://www.phylo.org/restusers)
+servers for a bayesian phylogenetic
 inference (using MrBayes) and then retrieve the results.
 It assumes your Nexus file has a MrBayes
 [Block](https://en.wikipedia.org/wiki/Nexus_file)
