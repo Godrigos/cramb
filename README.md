@@ -13,7 +13,7 @@ correctly configured along with the data to be analysed.
 
 Here is an example of a MrBayes Block inside a Nexus
 File:
-```
+```nexus
 begin mrbayes;
     set autoclose=yes nowarn=yes;
     charset Locus1 = 1-100;
