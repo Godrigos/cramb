@@ -96,7 +96,7 @@ def get_results(self, job):
                                                               "download of results from previous submissions!",
                                        icon='warning', justify=CENTER)
                 self.send_button.config(state=NORMAL)
-                quit()
+                exit()
             else:
                 continue
         except cra.CipresError:
