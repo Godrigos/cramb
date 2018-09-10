@@ -38,8 +38,7 @@ from datetime import datetime
 
 
 class Application:
-    def __init__(self, master):
-        self.master = master
+    def __init__(self, master=None):
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
         self.validate = False
