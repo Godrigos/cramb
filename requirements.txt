@@ -1,0 +1,6 @@
+biopython
+python_cipres
+dill
+requests
+tkinter
+ttkthemes
