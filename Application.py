@@ -55,6 +55,9 @@ class Application:
         self.mb_font = Style()
         self.mb_font.configure('TMessageBox', font=('Helvetica', 8))
 
+        self.frame = Frame(height=400, width=600)
+        self.frame.place(relx=0, rely=0)
+
         self.file_label = Label(master, text="File:", font=('Helvetica', 10, 'bold'))
         self.file_label.place(relx=0.04, rely=0.015, height=25)
 
