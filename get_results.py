@@ -91,14 +91,16 @@ def get_results(self, job):
             confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?", justify=CENTER)
             if confirm:
                 messagebox.showwarning("Job result pending!", "You current job results will not be downloaded "
-                                                              "automatically you will have to retrieve the results "
-                                                              "later! Restart this application and confirm the "
-                                                              "download of results from previous submissions!",
+                                                              "automatically. You will have to retrieve the results "
+                                                              "later!",
                                        icon='warning', justify=CENTER)
                 self.send_button.config(state=NORMAL)
                 exit()
             else:
                 continue
         except cra.CipresError:
+            self.text_box.insert(END, "CIPRES services are currently unavailable!\nTry again later!\n", "error")
+            self.text_box.config(state=DISABLED)
+            self.send_button.config(state=NORMAL)
             self.send_button.config(state=NORMAL)
             break
