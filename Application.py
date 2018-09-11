@@ -245,7 +245,7 @@ class Application:
             if not files:
                 pass
             else:
-                if self.send_button.state() == DISABLED:
+                if str(self.send_button['state']) == DISABLED:
                     self.results_button.config(state=DISABLED)
                 else:
                     self.results_button.config(state=NORMAL)
