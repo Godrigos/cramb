@@ -92,6 +92,7 @@ def get_results(self, job):
                 self.text_box.config(state=DISABLED)
                 remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
                 self.send_button.config(state=NORMAL)
+                self.results_button.config(state=NORMAL)
         except SystemExit:
             confirm = messagebox.askyesno("Job executing!", "Are you sure you want to exit?", justify=CENTER)
             if confirm:

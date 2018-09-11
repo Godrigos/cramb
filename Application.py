@@ -292,6 +292,7 @@ class Application:
                     self.text_box.config(state=DISABLED)
             else:
                 self.send_button.config(state=DISABLED)
+                self.results_button.config(state=DISABLED)
                 job = login.submitJob(vParams=vpar, inputParams=ipar, metadata=meta, validateOnly=self.validate)
                 with open(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')),
                           'wb') as f:
