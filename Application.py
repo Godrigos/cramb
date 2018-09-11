@@ -181,6 +181,7 @@ class Application:
                 pass
             del mb_block
             del found
+            self.send_button.config(state=NORMAL)
         except FileNotFoundError:
             pass
         except NexusError:
@@ -188,10 +189,12 @@ class Application:
             self.text_box.insert(END, "Nexus file is corrupted!\n", "error")
             self.text_box.insert(END, "Please, fix the file and try again!\n\n", "error")
             self.text_box.config(state=DISABLED)
+            self.send_button.config(state=DISABLED)
         except ValueError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "Wrong file type!\n\n", "error")
             self.text_box.config(state=DISABLED)
+            self.send_button.config(state=DISABLED)
 
     def getconfig(self):
         conf = {'URL': 'https://cipresrest.sdsc.edu/cipresrest/v1', 'APPNAME': '', 'APPID': '', 'USERNAME': '',
