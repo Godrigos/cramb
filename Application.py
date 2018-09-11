@@ -35,6 +35,7 @@ from get_results import get_results
 from job_show import job_show
 from glob import glob
 from datetime import datetime
+from sys import exit
 
 
 class Application:
