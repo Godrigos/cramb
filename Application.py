@@ -116,6 +116,7 @@ class Application:
         self.scrollb.place(relx=0.965, rely=0.3, width=20, height=220)
 
         self.text_box.config(yscrollcommand=self.scrollb.set)
+        self.text_box.see(END)
 
         self.progress = Progressbar(master, orient="horizontal", mode="determinate")
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
