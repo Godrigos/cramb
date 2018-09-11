@@ -1,5 +1,6 @@
 # cramb
-[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg)](https://github.com/Godrigos/cramb)
+
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Godrigos/cramb)
 
 CIPRES API - MrBayes Submission Client
 
