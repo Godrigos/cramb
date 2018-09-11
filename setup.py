@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='cramb',
-    version='2.0',
+    version='2.0.1',
     packages=[''],
     url='https://github.com/Godrigos/cramb',
     license='GPL-3.0',
