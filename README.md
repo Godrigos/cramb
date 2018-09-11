@@ -2,6 +2,8 @@
 
 CIPRES API - MrBayes Submission Client
 
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?style=flat-square)](https://github.com/Godrigos/cramb/releases)
+
 cramb is a [Python 3](https://www.python.org)
 application with a GUI built using Tkinter.
 It is intended to ease the process of sending a Nexus
