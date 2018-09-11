@@ -38,7 +38,8 @@ from datetime import datetime
 
 
 class Application:
-    def __init__(self, master=None):
+    def __init__(self, master):
+        self.master = master
         self.home_dir = str(Path.home())
         self.url_val = IntVar(value=0)
         self.validate = False
@@ -219,6 +220,7 @@ class Application:
                     self.text_box.insert(END, "Watching for results... (" +
                                          datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ')\n', "cool")
                     self.text_box.config(state=DISABLED)
+                    self.text_box.update()
                     self.state = job.isDone()
                     if self.state:
                         get_results(self, job)
