@@ -326,32 +326,3 @@ class Application:
             self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=NORMAL)
-
-    def old_job_check(self):
-        try:
-            files = []
-            for file in glob(join(dl_dir(), '*.pkl')):
-                files.append(file)
-            if not files:
-                pass
-            else:
-                for file in files:
-                    with open(join(dl_dir(), file), 'rb') as f:
-                        job = load(f)
-                    job.update()
-                    if not job.isDone():
-                        self.text_box.config(state=NORMAL)
-                        self.text_box.insert(END, job.messages[-1] + "\n", "cool")
-                        self.text_box.insert(END, "Job " + job.metadata['clientJobName'] +
-                                             " not finished yet!\nTry again later!\n", "cool")
-                        self.text_box.see(END)
-                        self.text_box.config(state=DISABLED)
-                    else:
-                        get_results(self, job)
-        except IndexError:
-            pass
-        except ConnectionError:
-            self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "No Internet connection. Try again later!\n", "error")
-            self.text_box.see(END)
-            self.text_box.config(state=DISABLED)
