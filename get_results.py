@@ -45,10 +45,12 @@ def get_results(self, job):
                     job.update()
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, job.messages[-1] + '\n', "cool")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
                 except ConnectionError:
                     self.text_box(state=NORMAL)
                     self.text_box.insert(END, "Connection lost! Will keep trying!\n", "error")
+                    self.text_box.see(END)
                     self.text_box(state=DISABLED)
                     pass
             else:
@@ -61,6 +63,7 @@ def get_results(self, job):
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, "Downloading results of " + str(job.metadata['clientJobName']) + '.\n',
                                      "cool")
+                self.text_box.see(END)
                 self.text_box.config(state=DISABLED)
                 self.text_box.update()
 
@@ -77,6 +80,7 @@ def get_results(self, job):
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
                                               "previous results\n", "error")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
                     self.send_button.config(state=NORMAL)
                     break
@@ -84,6 +88,7 @@ def get_results(self, job):
                 job.delete()
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, "Job completed and files downloaded!\n", "done")
+                self.text_box.see(END)
                 self.text_box.config(state=DISABLED)
                 remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
                 self.send_button.config(state=NORMAL)
@@ -100,6 +105,7 @@ def get_results(self, job):
                 continue
         except cra.CipresError:
             self.text_box.insert(END, "CIPRES services are currently unavailable!\nTry again later!\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=NORMAL)
             self.send_button.config(state=NORMAL)

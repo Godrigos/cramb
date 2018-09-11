@@ -116,7 +116,6 @@ class Application:
         self.scrollb.place(relx=0.965, rely=0.3, width=20, height=220)
 
         self.text_box.config(yscrollcommand=self.scrollb.set)
-        self.text_box.see(END)
 
         self.progress = Progressbar(master, orient="horizontal", mode="determinate")
         self.progress.place(relx=0.005, rely=0.86, width=593, height=20)
@@ -150,6 +149,7 @@ class Application:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "Alignment of " + str(len(align)) + " sequences of length " +
                                  str(align.get_alignment_length()) + ".\n", "cool")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             del align
 
@@ -170,11 +170,13 @@ class Application:
                     if 'outgroup' in item.lower():
                         self.text_box.config(state=NORMAL)
                         self.text_box.insert(END, item + "\n\n", "cool")
+                        self.text_box.see(END)
                         self.text_box.config(state=DISABLED)
                         outgroup = True
                 if not outgroup:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "You file has no outgroup defined!\n\n", "cool")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
                 del outgroup
             except ValueError:
@@ -188,11 +190,13 @@ class Application:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "Nexus file is corrupted!\n", "error")
             self.text_box.insert(END, "Please, fix the file and try again!\n\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=DISABLED)
         except ValueError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "Wrong file type!\n\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=DISABLED)
 
@@ -223,6 +227,7 @@ class Application:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Watching for results... (" +
                                          datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ')\n', "cool")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
                     self.text_box.update()
                     self.state = job.isDone()
@@ -278,10 +283,12 @@ class Application:
                                           validateOnly=self.validate)
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, str(job_show(job)), "cool")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
                 except cra.ValidationError:
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Submission failed! Check you file and login information!\n\n", "error")
+                    self.text_box.see(END)
                     self.text_box.config(state=DISABLED)
             else:
                 self.send_button.config(state=DISABLED)
@@ -292,8 +299,9 @@ class Application:
                 self.text_box.config(state=NORMAL)
                 self.text_box.insert(END, job_show(job), "cool")
                 self.text_box.insert(END, "You may now close this application and wait for CIPRES e-mail"
-                                          " warning you about job completion.\nOr keep it open so it will"
+                                          " warning you about job completion. Or keep it open so it will"
                                           " watch out for the results when ready!\n")
+                self.text_box.see(END)
                 self.text_box.config(state=DISABLED)
                 self.text_box.update()
                 self.recover()
@@ -301,17 +309,20 @@ class Application:
         except ConnectionError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "No Internet connection!\nVerify your connection and try again!\n\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=NORMAL)
         except cra.CipresError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "CIPRES services are currently unavailable or you login information"
                                       " is incorrect!\n\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=NORMAL)
         except FileNotFoundError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "File not found!\n\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=NORMAL)
 
@@ -332,6 +343,7 @@ class Application:
                         self.text_box.insert(END, job.messages[-1] + "\n", "cool")
                         self.text_box.insert(END, "Job " + job.metadata['clientJobName'] +
                                              " not finished yet!\nTry again later!\n", "cool")
+                        self.text_box.see(END)
                         self.text_box.config(state=DISABLED)
                     else:
                         get_results(self, job)
@@ -340,4 +352,5 @@ class Application:
         except ConnectionError:
             self.text_box.config(state=NORMAL)
             self.text_box.insert(END, "No Internet connection. Try again later!\n", "error")
+            self.text_box.see(END)
             self.text_box.config(state=DISABLED)
