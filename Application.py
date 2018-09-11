@@ -245,7 +245,10 @@ class Application:
             if not files:
                 pass
             else:
-                self.results_button.config(state=NORMAL)
+                if self.send_button.state() == DISABLED:
+                    self.results_button.config(state=DISABLED)
+                else:
+                    self.results_button.config(state=NORMAL)
                 return files
         except IndexError:
             pass
