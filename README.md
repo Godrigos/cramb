@@ -1,4 +1,7 @@
 # cramb
+
+[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg)](https://github.com/Godrigos/cramb)
+
 CIPRES API - MrBayes Submission Client
 
 cramb is a [Python 3](https://www.python.org)
