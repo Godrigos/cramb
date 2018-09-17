@@ -30,10 +30,9 @@ from os.path import splitext, basename, join
 import python_cipres.client as cra
 from requests.exceptions import ConnectionError
 from download_folder_path import get_download_path as dl_dir
-from dill import dump, load
+from dill import dump
 from get_results import get_results
 from job_show import job_show
-from glob import glob
 from datetime import datetime
 from sys import exit
 
@@ -221,9 +220,7 @@ class Application:
             if not files:
                 pass
             else:
-                for file in files:
-                    with open(join(dl_dir(), file), 'rb') as f:
-                        job = load(f)
+                for job in files:
                     job.update()
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, "Watching for results... (" +
@@ -236,13 +233,14 @@ class Application:
                         get_results(self, job)
         except IndexError:
             pass
-        self.master.after(300000, self.recover)
+        self.master.after(900000, self.recover)
 
     def download_state(self):
         try:
-            files = []
-            for file in glob(join(dl_dir(), '*.pkl')):
-                files.append(file)
+            login = cra.Client(appname=self.appname.get(), appID=self.appid.get(),
+                               username=self.user.get(), password=self.passwd.get(),
+                               baseUrl=self.server_url.get())
+            files = login.listJobs()
             if not files:
                 pass
             else:

@@ -46,11 +46,13 @@ def get_results(self, job):
                     self.text_box.config(state=NORMAL)
                     self.text_box.insert(END, job.messages[-1] + '\n', "cool")
                     self.text_box.see(END)
+                    self.text_box.update()
                     self.text_box.config(state=DISABLED)
                 except ConnectionError:
                     self.text_box(state=NORMAL)
                     self.text_box.insert(END, "Connection lost! Will keep trying!\n", "error")
                     self.text_box.see(END)
+                    self.text_box.update()
                     self.text_box(state=DISABLED)
                     pass
             else:
@@ -81,6 +83,7 @@ def get_results(self, job):
                     self.text_box.insert(END, "Connection lost!\nRestart the application and confirm the download of"
                                               "previous results\n", "error")
                     self.text_box.see(END)
+                    self.text_box.update()
                     self.text_box.config(state=DISABLED)
                     self.send_button.config(state=NORMAL)
                     break
@@ -90,7 +93,10 @@ def get_results(self, job):
                 self.text_box.insert(END, "Job completed and files downloaded!\n", "done")
                 self.text_box.see(END)
                 self.text_box.config(state=DISABLED)
-                remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
+                try:
+                    remove(join(dl_dir(), str(job.metadata['clientJobName'] + '.pkl')))
+                except FileNotFoundError:
+                    pass
                 self.send_button.config(state=NORMAL)
                 self.results_button.config(state=NORMAL)
         except SystemExit:
@@ -101,7 +107,7 @@ def get_results(self, job):
                                                               "later!",
                                        icon='warning', justify=CENTER)
                 self.send_button.config(state=NORMAL)
-                exit()
+                exit(0)
             else:
                 continue
         except cra.CipresError:

@@ -31,5 +31,4 @@ root.title("cramb - CIPRES API MrBayes Client")
 style = ThemedStyle(root)
 style.set_theme("clearlooks")
 Application(root)
-# root.iconbitmap('cramb.ico')    # Windows only
 root.mainloop()
