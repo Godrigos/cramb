@@ -12,6 +12,7 @@ setuptools.setup(
     author_email='',
     description='CIPRES Rest API - MrBayes Client',
     long_description=long_description,
+    install_requires=['python_cipres', 'biopython', 'dill', 'ttkthemes'],
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
