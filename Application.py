@@ -249,7 +249,7 @@ class Application:
                 else:
                     self.results_button.config(state=NORMAL)
                 return files
-        except IndexError:
+        except (IndexError, cra.CipresError):
             pass
 
     def url_radio(self):
