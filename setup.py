@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='cramb',
-    version='2.0.3',
+    version='2.0.4',
     url='https://github.com/Godrigos/cramb',
     license='GPL-3.0',
     author='Rodrigo Aluizio',
