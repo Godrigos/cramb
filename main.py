@@ -29,6 +29,6 @@ root.geometry('600x400')
 root.resizable(width=False, height=False)
 root.title("cramb - CIPRES API MrBayes Client")
 style = ThemedStyle(root)
-style.set_theme("clearlooks") # Windows version should use "vista" for a more native experience
+style.set_theme("clearlooks")  # Windows version should use "vista" for a more native experience
 Application(root)
 root.mainloop()
