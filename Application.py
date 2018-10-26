@@ -23,6 +23,7 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename
 from tkinter.font import nametofont
+from tkinter.messagebox import showerror
 from pathlib import Path
 from Bio import AlignIO
 from Bio.Nexus.Nexus import NexusError
@@ -249,8 +250,10 @@ class Application:
                 else:
                     self.results_button.config(state=NORMAL)
                 return files
-        except (IndexError, cra.CipresError, ConnectionError):
+        except (IndexError, cra.CipresError):
             pass
+        except ConnectionError:
+            showerror("Error", "Could not establish a connection to CIPRES server.")
 
     def url_radio(self):
         """
