@@ -23,7 +23,6 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename
 from tkinter.font import nametofont
-from tkinter.messagebox import showerror
 from pathlib import Path
 from Bio import AlignIO
 from Bio.Nexus.Nexus import NexusError
@@ -243,17 +242,30 @@ class Application:
                                baseUrl=self.server_url.get())
             files = login.listJobs()
             if not files:
-                pass
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, "You have no jobs on server.\n", "cool")
+                self.text_box.see(END)
+                self.text_box.config(state=DISABLED)
+                self.text_box.update()
             else:
                 if str(self.send_button['state']) == DISABLED:
                     self.results_button.config(state=DISABLED)
                 else:
                     self.results_button.config(state=NORMAL)
                 return files
-        except (IndexError, cra.CipresError):
-            pass
+        except cra.CipresError:
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "Problem logging in to CIPRES Server.\nCheck your login information.\n", "error")
+            self.text_box.see(END)
+            self.text_box.config(state=DISABLED)
+            self.text_box.update()
         except ConnectionError:
-            showerror("Error", "Could not establish a connection to CIPRES server.")
+            self.text_box.config(state=NORMAL)
+            self.text_box.insert(END, "Problem logging in to CIPRES Server.\nIncapable to list the state of "
+                                      "your jobs on server side.\nCheck your connection!\n", "error")
+            self.text_box.see(END)
+            self.text_box.config(state=DISABLED)
+            self.text_box.update()
 
     def url_radio(self):
         """
