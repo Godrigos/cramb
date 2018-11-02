@@ -252,6 +252,13 @@ class Application:
                     self.results_button.config(state=DISABLED)
                 else:
                     self.results_button.config(state=NORMAL)
+
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, f"You have {len(files)} job(s) on server.\n", "cool")
+                self.text_box.see(END)
+                self.text_box.config(state=DISABLED)
+                self.text_box.update()
+
                 return files
         except cra.CipresError:
             self.text_box.config(state=NORMAL)
