@@ -5,13 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='cramb',
-    version='2.0.4',
+    version='2.0.5',
     url='https://github.com/Godrigos/cramb',
     license='GPL-3.0',
     author='Rodrigo Aluizio',
     author_email='',
     description='CIPRES Rest API - MrBayes Client',
     long_description=long_description,
+    entry_points={'gui_scripts': ["MSAJ = main.py"]},
     install_requires=['python_cipres', 'biopython', 'dill', 'ttkthemes'],
     packages=setuptools.find_packages(),
     classifiers=[

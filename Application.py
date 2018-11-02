@@ -186,10 +186,10 @@ class Application:
             self.send_button.config(state=NORMAL)
         except FileNotFoundError:
             pass
-        except NexusError:
+        except NexusError as e:
             self.text_box.config(state=NORMAL)
-            self.text_box.insert(END, "Nexus file is corrupted!\n", "error")
-            self.text_box.insert(END, "Please, fix the file and try again!\n\n", "error")
+            self.text_box.insert(END, str(e), "error")
+            self.text_box.insert(END, "\nPlease, fix the file and try again!\n\n", "error")
             self.text_box.see(END)
             self.text_box.config(state=DISABLED)
             self.send_button.config(state=DISABLED)
@@ -252,6 +252,13 @@ class Application:
                     self.results_button.config(state=DISABLED)
                 else:
                     self.results_button.config(state=NORMAL)
+
+                self.text_box.config(state=NORMAL)
+                self.text_box.insert(END, f"You have {len(files)} job(s) on server.\n", "cool")
+                self.text_box.see(END)
+                self.text_box.config(state=DISABLED)
+                self.text_box.update()
+
                 return files
         except cra.CipresError:
             self.text_box.config(state=NORMAL)
