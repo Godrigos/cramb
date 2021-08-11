@@ -4,7 +4,6 @@ CIPRES API - MrBayes Submission Client
 
 [![Github Releases](https://img.shields.io/github/downloads/Godrigos/cramb/total.svg?style=flat-square)](https://github.com/Godrigos/cramb/releases)
 [![GitHub release](https://img.shields.io/github/release/Godrigos/cramb.svg?style=flat-square)](https://github.com/Godrigos/cramb/releases/latest)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DP9T5DXR2KTKA&lc=US&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 
 cramb is a [Python 3](https://www.python.org)
 application with a GUI built using Tkinter.
